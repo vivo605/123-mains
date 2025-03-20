@@ -63,8 +63,24 @@ console.log(c instanceof Container) // true
 console.log(o instanceof Container) // false
 
 c.value--
+// c.test
 
 c.inc()
 o.inc()
 o.name
 console.log(c.value === o.value)
+
+
+class SuperContainer extends Container {
+  test: string
+
+  constructor(v: number) {
+    super(v)
+    this.test = 'text'
+  }
+}
+
+const c2 = new SuperContainer(12)
+c2.inc()
+c2.value
+c2.test
