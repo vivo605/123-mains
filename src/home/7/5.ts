@@ -1,3 +1,5 @@
+import { relative } from "path"
+
 export {}
 /*
 5. Тамагочи
@@ -27,7 +29,21 @@ export {}
 abstract class Pet {
   readonly name: string
   #isSleeping: boolean
-  energy: number
+  readonly abstract type: string
+
+  protected _energy: number
+  protected readonly abstract _additionalActions: string
+  
+  get availableActions() {
+    return (
+      '1. eat \n' +
+      '2. voice \n' +
+      '3. sleep \n' +
+      '4. wake up \n' +
+      this._additionalActions
+      // '5. surprise | get ball \n'
+    )
+  }
 
   get isSleeping() {
     return this.#isSleeping
@@ -36,7 +52,7 @@ abstract class Pet {
   constructor(name: string) {
     this.name = name
     this.#isSleeping = false
-    this.energy = 0
+    this._energy = 0
   }
 
   protected abstract _voice(): void
@@ -70,51 +86,101 @@ abstract class Pet {
   }
 
   eat() {
-    this.energy = random(1, 3)
+    this._energy = random(1, 3)
   }
 }
 
 class Cat extends Pet {
+  readonly type: string
+  constructor(name: string) {
+    super(name)
+    this.type = 'кот'
+  }
+
   protected _voice() {
-    if (this.energy > 0){
+    if (this._energy > 0){
       print('Мяу :3')
-      this.energy--
+      this._energy--
     } else {
       print('Цитаты великих котов: "Не откладывай на завтра то, что можно съесть сегодня..." 👆')
     }
   }
+
+  getSurprise() {
+    if (this._energy < 1){
+      print('Я накакал тебе в тапки.Теперь еду давай :3') //:3
+    }
+    else{
+      print('Что то я не то сьел.Загляни в тапки)')
+    }
+  }
+
+  protected get _additionalActions() {
+    return '5.surprise'
+  }
 }
 
 class Dog extends Pet {
+  readonly type = 'пёс'
+
   protected _voice(){
-    if (this.energy > 0){
+    if (this._energy > 0){
       print('Гаф :3')
-      this.energy--
+      this._energy--
     }
     else{
       print('Жрать хочу >:(')
     }
   }
+
+  protected get _additionalActions() {
+    return 'get ball'
+  }
+
+  getBall() {
+    print('Кинь мячик ещё раз')
+    this._energy--
+  }
 }
 
 // class Dog {} // !
 
-const cat: Pet = new Cat('Васька') // input('Как зовут кота или гибрида): ')
-print(`Кота зовут: ${cat.name}`)
+// 1. eat2. voice3. sleep4. wakeUp5. surprise
 
-cat.sleep() // Васька уснул / Васька уже спит 
-cat.wakeUp() // Васька проснулся / Васька и так не спит
+// input('Как зовут кота или гибрида): ')
+const cat = new Cat('Матроскин')
+const dog = new Dog('Шарик')
 
-cat.voice() // Мяу :3 / Не откладывай на завтра то, что можно съесть сегодня...
+// while (true) {
+const pet: Pet = random(0, 1) ? cat : dog
 
-cat.isSleeping
+print(`Это ${pet.type}, его зовут ${pet.name}`)
+print(pet.availableActions)
+/*
+1. eat
+2. voice
+3. sleep
+4. wakeUp
+5. surprise
+*/
+print('Выберите действие: ')
 
-cat.eat() // energy [1..3]
-// cat.#energy
+
+// }
+
+
+// // примеры
+// print(`Кота зовут: ${cat.name}`)
+// cat.sleep() // Васька уснул / Васька уже спит 
+// cat.wakeUp() // Васька проснулся / Васька и так не спит
+// cat.voice() // Мяу :3 / Не откладывай на завтра то, что можно съесть сегодня...
+// cat.isSleeping
+// cat.eat() // energy [1..3]
+// // cat.#energy
 
 /*
 Домашка:
 7.3 - дописать все CorrectNumber
 7.4 - переписать с использованием классов
-7.5 - energy сделать доступным в классах
+7.5 - доделать цикл с выбором действий
 */
