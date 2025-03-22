@@ -116,7 +116,7 @@ class Cat extends Pet {
   }
 
   protected get _additionalActions() {
-    return '5.surprise'
+    return '5. surprise'
   }
 }
 
@@ -134,7 +134,7 @@ class Dog extends Pet {
   }
 
   protected get _additionalActions() {
-    return 'get ball'
+    return '5. get ball'
   }
 
   getBall() {
@@ -151,22 +151,60 @@ class Dog extends Pet {
 const cat = new Cat('Матроскин')
 const dog = new Dog('Шарик')
 
-// while (true) {
 const pet: Pet = random(0, 1) ? cat : dog
 
 print(`Это ${pet.type}, его зовут ${pet.name}`)
-print(pet.availableActions)
-/*
-1. eat
-2. voice
-3. sleep
-4. wakeUp
-5. surprise
-*/
-print('Выберите действие: ')
 
+while (true) {
+  print(pet.availableActions)
+  const input_actions = input('Выберите действие: ').toLowerCase()
+  /*
+  1. eat
+  2. voice
+  3. sleep
+  4. wakeUp
+  5. surprise
+  */
 
-// }
+  switch (input_actions) {
+    case "eat":
+      pet.eat();
+      break;
+
+    case "voice":
+      pet.voice();
+      break;
+
+    case "sleep":
+      pet.sleep();
+      break;
+
+    case "wake up":
+      pet.wakeUp();
+      break;
+
+    case "surprise":
+      if (pet instanceof Cat) {
+        pet.getSurprise();
+      } else {
+        console.log("Это действие доступно только для кота! Или у тебя гебрид?...");
+      }
+      break;
+
+    case "get ball":
+      if (pet instanceof Dog) {
+        pet.getBall();
+      } else {
+        console.log("Это действие доступно только для собаки! Или у тебя гебрид?...");
+      }
+      break;
+
+    default:
+      console.log("Выбери реальное действие");
+      break;
+  }
+
+}
 
 
 // // примеры
