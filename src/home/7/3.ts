@@ -45,48 +45,70 @@ const greetClient = (client: Client) => {
 
   // вариативные типы
 
+  Целые числа
+  - положительным или отрицательным, или ноль
+  - чётным или нечётным (isEven | isOdd)
+  ! на какое максимальное целое число можно поделить целую часть без остатка, кроме самого себя
+
+  Дробное число FloatNumber
+  - положительным или отрицательным
+  - целую часть integerPart
 */
 
 // abstract
 type CorrectNumber = {
-  isCorrect: true;
-  isPositive: boolean; // Optional property to indicate if the number is positive
+  isCorrect: true
+  isPositive: boolean // Optional property to indicate if the number is positive
 }
 
+type FloatNumber = CorrectNumber & {
+  sign: 'positive' | 'negative'
+  integerPart: number
+  // Math.trunc
+}
+
+type IntegerNumber = CorrectNumber & {
+  sign: 'positive' | 'negative' | 'ignore'
+  isEven: boolean
+  isOdd: boolean
+}
+
+// abstract
 type IncorrectNumber = {
-  isCorrect: false;
+  isCorrect: false
 }
 
 type InfinityNumber = IncorrectNumber & {
-  isInfinity: true;
-  sign: 'positive' | 'negative';
+  isInfinity: true
+  sign: 'positive' | 'negative'
 }
 
 type NotNumber = IncorrectNumber & {
-  isInfinity: false;
+  isInfinity: false
 }
 
-type NumberInfo = CorrectNumber | InfinityNumber | NotNumber;
+type NumberInfo = IntegerNumber | FloatNumber | InfinityNumber | NotNumber
 
 const numberInfo = (n: number): NumberInfo => {
   if (isFinite(n)) {
+    // TODO: заменить на IntegerNumber и FloatNumber
     return {
       isCorrect: true,
       isPositive: n > 0, 
-    } satisfies CorrectNumber;
+    } satisfies CorrectNumber
   } else {
-    const isInfinity = !isNaN(n);
+    const isInfinity = !isNaN(n)
     if (isInfinity) {
       return {
         isCorrect: false,
         isInfinity: true,
         sign: n > 0 ? 'positive' : 'negative',
-      } satisfies InfinityNumber;
+      } satisfies InfinityNumber
     } else {
       return {
         isCorrect: false,
         isInfinity: false,
-      } satisfies NotNumber;
+      } satisfies NotNumber
     }
   }
 }
@@ -95,8 +117,8 @@ const numberInfo = (n: number): NumberInfo => {
 // start
 const n = Number(input('> '))
 const info = numberInfo(n)
-if (!info.isCorrect) {
-  info.isInfinity
+if (!info.isCorrect && info.isInfinity) {
+  info.sign
 } else {
   // info.isPositive
 }

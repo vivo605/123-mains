@@ -29,18 +29,20 @@ export {}
 abstract class Pet {
   readonly name: string
   #isSleeping: boolean
+  #onHome: boolean
   readonly abstract type: string
 
   protected _energy: number
   protected readonly abstract _additionalActions: string
-  
+
   get availableActions() {
     return (
       '1. eat \n' +
       '2. voice \n' +
       '3. sleep \n' +
       '4. wake up \n' +
-      this._additionalActions
+      this._additionalActions+
+      '6. home \n'
       // '5. surprise | get ball \n'
     )
   }
@@ -53,6 +55,16 @@ abstract class Pet {
     this.name = name
     this.#isSleeping = false
     this._energy = 0
+    this.#onHome = false
+  }
+
+  home() {
+    if (this.#onHome) {
+      print('Я и так у тебя дома или у тебя нет дома..)')
+    }
+    else{
+      print('Вы забрали существо домой))')
+    }
   }
 
   protected abstract _voice(): void
@@ -87,6 +99,7 @@ abstract class Pet {
 
   eat() {
     this._energy = random(1, 3)
+    print(`${this.name} наелся :Ъ`)
   }
 }
 
@@ -148,44 +161,67 @@ class Dog extends Pet {
 // 1. eat2. voice3. sleep4. wakeUp5. surprise
 
 // input('Как зовут кота или гибрида): ')
-const cat = new Cat('Матроскин')
+
+
+const cat1 = new Cat('Матроскин')
+const cat2 = new Cat('Васька')
 const dog = new Dog('Шарик')
 
-const pet: Pet = random(0, 1) ? cat : dog
+// не надо так 😡  
+// class home
+// Home.callRandomPet()
 
-print(`Это ${pet.type}, его зовут ${pet.name}`)
+class Home {
+  allPetsAreSleeping: boolean
+  
+  constructor() {
+    this.allPetsAreSleeping = false
+  }
 
-while (true) {
+  home() {
+    if (this.allPetsAreSleeping) {
+      print('Мы и так дома')
+    }
+  }
+
+}
+
+const home = new Home()
+
+loop: while (true) {
+  print()
+  // const pet: Pet = random(0, 1) ? cat : dog
+  const pet = home.callRandomPet()
+  print(`Это ${pet.type}, его зовут ${pet.name}`)
+
   print(pet.availableActions)
   const input_actions = input('Выберите действие: ').toLowerCase()
-  /*
-  1. eat
-  2. voice
-  3. sleep
-  4. wakeUp
-  5. surprise
-  */
-
   switch (input_actions) {
     case "eat":
-      pet.eat();
+      pet.eat()
       break;
 
     case "voice":
-      pet.voice();
+      pet.voice()
       break;
 
     case "sleep":
-      pet.sleep();
+      pet.sleep()
+
+      // if (cat.isSleeping || dog.isSleeping){
+      if (home.allPetsAreSleeping){
+        print('Все уснули, хватит их дёргать)')
+        break loop
+      }
       break;
 
     case "wake up":
-      pet.wakeUp();
+      pet.wakeUp()
       break;
 
     case "surprise":
       if (pet instanceof Cat) {
-        pet.getSurprise();
+        pet.getSurprise()
       } else {
         console.log("Это действие доступно только для кота! Или у тебя гебрид?...");
       }
@@ -193,14 +229,16 @@ while (true) {
 
     case "get ball":
       if (pet instanceof Dog) {
-        pet.getBall();
+        pet.getBall()
       } else {
-        console.log("Это действие доступно только для собаки! Или у тебя гебрид?...");
+        console.log("Это действие доступно только для собаки! Или у тебя гебрид?...")
       }
       break;
 
+    case 'home':
+      Pet.home()
     default:
-      console.log("Выбери реальное действие");
+      console.log("Выбери реальное действие")
       break;
   }
 

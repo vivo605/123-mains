@@ -1,7 +1,7 @@
 import './lib'
 
-// import './lesson/8'
+// import './lesson/9'
 
-import './home/7/5'
+import './home/9/2'
 
 // import './spor'
