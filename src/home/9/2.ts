@@ -18,6 +18,13 @@ const persons: Person[] = [
     books: ['грокаем алгоритмы', 'дети капитана гранта']
   },
   {
+    name: 'Мишутка',
+    age: 11,
+    isMarried: false,
+    gender: 'm',
+    books: []
+  },
+  {
     name: 'Виталий',
     age: 12,
     isMarried: false,
@@ -64,9 +71,55 @@ print(`${smthLikePoter ? 'Есть любитель' : 'Нет любителе�
 
 // TODO: задания на редактирование
 
-print('=== Сортировка ===')
+print()
+print('=== Семейный статус ===')
+const marriedStatus = (person: Person): string => {
+  switch (person.gender) {
+    case "m":
+      return (
+        person.isMarried 
+          ? 'женат'
+          : 'не женат'
+      )
+    case "f":
+      return (
+        person.isMarried 
+          ? 'замужем'
+          : 'не замужем'
+      )
+  }
+}
 persons.toSorted((p1, p2) => p2.name.localeCompare(p1.name, 'ru')).forEach(p => {
-  print(p.name)
+  print(`${p.name}: ${marriedStatus(p)}`)
 })
 
-// numbers.toSorted((n1, n2) => n1 - n2)
+print()
+print('=== Имена ===')
+
+type NamesCount = {
+  [key in string]: number
+}
+
+const names: NamesCount = {}
+
+for (const p of persons) {
+  // if (p.name in names) {
+  //   names[p.name]!++
+  // } else{
+  //   names[p.name] = 1
+  // }
+  const count = names[p.name]
+  if (typeof count !== 'undefined') {
+    names[p.name] = count + 1
+  } else {
+    names[p.name] = 1
+  }
+}
+
+for (const name in names) {
+  const count = names[name]
+  print(`${name}: ${count}`)
+}
+
+// Аня: 0
+// names['Аня'] = 0
