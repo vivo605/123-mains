@@ -59,9 +59,39 @@ numbers.toSorted((n1, n2) => n1 - n2)
 
 const newArray = [...numbers, 5] // [2, 5, 7, 3, 0, 5]
 
+// индексы
 const i1 = numbers.indexOf(5) // 1
 const i2 = numbers.indexOf(5, 2) // 5
 
 numbers.lastIndexOf(5) // 5
 numbers.find(n => n > 5) // 5
 numbers.includes(5)
+
+// найти второй индекс (10)
+// const indexOf10_1 = numbers.indexOf(10)
+// const indexOf10_2 = numbers.indexOf(10,indexOf10_1+1)
+
+// const indexOf10_2 = numbers.indexOf(10, numbers.indexOf(10)+1)
+
+let indexOf10_5 = -1
+for (let i = 0; i < 5; i++) {
+  indexOf10_5 = numbers.indexOf(10, indexOf10_5 + 1)
+  if (indexOf10_5 === -1) {
+    break
+  }
+}
+
+if (indexOf10_5 === -1) {
+  console.error('Мы такого не нашли 😔😔😔')
+} else {
+  numbers.splice(indexOf10_5, 1)
+}
+
+// reduce
+const nums = [1,2,3]
+const sum = nums.reduce(
+  (counter, n, i) => {
+    return 2
+  },
+  0
+)
