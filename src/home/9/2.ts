@@ -106,8 +106,8 @@ if (vasya == undefined){
 }
 
 // TODO - посчитать средний возраст (собираем статистику для пенсионного фонда)
-// const averageAge = persons.reduce((counter, n) => counter + n)
-// print(`Средний возраст: ${averageAge} лет`)
+const averageAge = persons.reduce((sum, person) => sum + person.age, 0) / persons.length;
+print(`Средний возраст: ${averageAge} лет`);
 
 // if (vasya) {
 //   const newIndex = Math.trunc(persons.length / 2)
@@ -116,7 +116,7 @@ if (vasya == undefined){
 
 
 
-print()
+print() // И что это за print?
 print('=== Семейный статус ===')
 const marriedStatus = (person: Person): string => {
   switch (person.gender) {
