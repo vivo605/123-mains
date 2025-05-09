@@ -1,3 +1,3 @@
-import { startGame } from './game';
+import { startGame } from './game'
 
 startGame()
