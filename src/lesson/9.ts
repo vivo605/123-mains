@@ -60,12 +60,13 @@ numbers.toSorted((n1, n2) => n1 - n2)
 const newArray = [...numbers, 5] // [2, 5, 7, 3, 0, 5]
 
 // индексы
-const i1 = numbers.indexOf(5) // 1
+const i1 = numbers.indexOf(5) // searchElement , index: 1
 const i2 = numbers.indexOf(5, 2) // 5
 
 numbers.lastIndexOf(5) // 5
 numbers.find(n => n > 5) // 5
 numbers.includes(5)
+numbers.findIndex(n => n > 5)
 
 // найти второй индекс (10)
 // const indexOf10_1 = numbers.indexOf(10)

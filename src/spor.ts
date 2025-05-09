@@ -1,3 +1,4 @@
+export {}
 const homework = () => {
   while (true) {
     const randomNum = Math.random() * 100

@@ -1,4 +1,3 @@
-import { inputStartBalance } from './inputs'
 import { RandomColor, translateColor } from './types'
 
 export const printGreeting = () => {

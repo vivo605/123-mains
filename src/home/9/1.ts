@@ -39,4 +39,21 @@ for (const n of randomNumbers) {
 }
 print(`max = ${max}`)
 
-// TODO: сумму чисел, количество чётных и нечётных чисел
+let sum = 0
+for (const n of randomNumbers) {
+  sum += n
+}
+print(`sum = ${sum}`) 
+
+let even = 0
+let odd = 0
+for (const n of randomNumbers) {
+  if (n % 2) {
+    odd++ // нечётные
+  }
+  else{
+    even++ // чётные
+  }
+}
+print(`even = ${even}`) 
+print(`odd = ${odd}`) 

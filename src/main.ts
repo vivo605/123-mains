@@ -2,5 +2,5 @@ import './lib'
 
 // import './lesson/9'
 
-// import '../src/lesson/9'
-import './test'
+import './home/9/3'
+// import './rpg-game'

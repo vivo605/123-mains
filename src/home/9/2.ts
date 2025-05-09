@@ -6,23 +6,34 @@ type Person = {
   isMarried: boolean
   gender: 'm' | 'f'
   books: string[]
+  address: {
+    home: number
+    street: string
+  }
 }
 
-// TODO: заполнить
 const persons: Person[] = [
   {
     name: 'Мишутка',
     age: 14,
     isMarried: true,
     gender: 'm',
-    books: ['грокаем алгоритмы', 'дети капитана гранта']
+    books: ['грокаем алгоритмы', 'дети капитана гранта'],
+    address : {
+      home: 12,
+      street: 'Ленина',
+    }
   },
   {
     name: 'Мишутка',
     age: 11,
     isMarried: false,
     gender: 'm',
-    books: []
+    books: [],
+    address: {
+      home: 2,
+      street: 'Ромашкино',
+    },
   },
   {
     name: 'Виталий',
@@ -30,6 +41,10 @@ const persons: Person[] = [
     isMarried: false,
     gender: 'm',
     books: [],
+    address: {
+      home: 3,
+      street: 'Ромашкино',
+    },
   },
   {
     name: 'Вася',
@@ -37,20 +52,32 @@ const persons: Person[] = [
     isMarried: false,
     gender: 'm',
     books: [],
+    address: {
+      home: 30,
+      street: 'Ленина',
+    },
   },
   {
     name: 'Катюша',
     age: 14,
     isMarried: true,
     gender: 'f',
-    books: ['кулинарные рецепты', 'Гарри Поттер']
+    books: ['кулинарные рецепты', 'Гарри Поттер'],
+    address: {
+      home: 14,
+      street: 'Независимости',
+    },
   },
   {
     name: 'Петя',
     age: 40,
     isMarried: true,
     gender: 'm',
-    books: []
+    books: [],
+    address: {
+      home: 13,
+      street: 'Проблемная',
+    },
   },
 ]
 
@@ -101,20 +128,28 @@ if (vasya) {
   print('Удаление законченно 😎😎')
 }
 
-if (vasya == undefined){
+const averageAge = persons.reduce((sum, person) => sum + person.age, 0) / persons.length
+print(`Средний возраст: ${averageAge} лет`)
+
+// print('Persons: ' + persons.map((person) => person.name).join(', '))
+// Persons: Мишутка, Мишутка, Виталий, Катюша, Петя
+
+if (vasya) {
+  const newIndex = Math.trunc(persons.length / 2)
+  persons.splice(newIndex, 0, vasya)
   print('Вася сказал что исправится поэтому, время его откопать')
+
+  const indexOfPetya = persons.findIndex(p => p.name === 'Петя')
+  const Petya = persons[indexOfPetya]
+  if (Petya) {
+    persons.splice(indexOfPetya, 1)
+    persons.splice(newIndex,0,Petya)
+    print('Петя смотри за этим должником вдруг депнет)')
+  }
 }
 
-// TODO - посчитать средний возраст (собираем статистику для пенсионного фонда)
-const averageAge = persons.reduce((sum, person) => sum + person.age, 0) / persons.length;
-print(`Средний возраст: ${averageAge} лет`);
-
-// if (vasya) {
-//   const newIndex = Math.trunc(persons.length / 2)
-//   persons.splice(newIndex, 0, vasya)
-// }
-
-
+print('Persons: ' + persons.map((person) => person.name).join(', '))
+// Persons: Мишутка, Мишутка, Петя, Вася, Виталий, Катюша
 
 print() // И что это за print?
 print('=== Семейный статус ===')
@@ -168,3 +203,36 @@ for (const name in names) {
 
 // Аня: 0
 // names['Аня'] = 0
+
+print()
+print('=== Улицы ===')
+// console.log('Persons: ' + persons.map((person) => person.name).join(', '))
+// console.log(persons.map((persons) => persons.address.street + ' ' person))
+
+type Streets = {
+  [key in string]: string[]
+}
+
+
+const streets: Streets = {}
+
+for (const p of persons) {
+  // if (!(p.address.street in streets)){
+  //   streets[p.address.street] = []
+  // }
+  // streets[p.address.street]!.push(p.name)
+ 
+  const names = streets[p.address.street] ?? []
+  names.push(p.name)
+  streets[p.address.street] = names
+}
+
+/*
+улица1: имя1, имя2
+улица2: имя3, имя4
+*/
+
+for (const street in streets) {
+  const names = streets[street]!
+  print(`${street}: ${names.join(', ')}`)
+}
